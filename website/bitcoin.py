@@ -2,7 +2,7 @@ import requests
 from flask import render_template
 import redis
 
-redis = redis.Redis(host = "localhost", port = 6379)
+redis = redis.Redis(host = "redis", port = 6379)
 
 #the URL ticker to get the .json file of the bitcoin currency
 BITCOIN_TICKER_URL = "https://api.coindesk.com/v1/bpi/currentprice.json"

@@ -1,7 +1,7 @@
-FROM 3.10.5-slim-buster
+FROM python:3.10.5-alpine
 WORKDIR /code
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 EXPOSE 5000
 COPY . . 
-CMD ["py", "main.py"]
+CMD ["python3", "main.py"]

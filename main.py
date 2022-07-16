@@ -8,4 +8,4 @@ def main():
     return bitcoin.show_content()
 
 if __name__ == "__main__":
-    server.run(debug = True ,port = 5000 ,host = "0.0.0.0")
+    server.run(debug = True ,host = "0.0.0.0")
