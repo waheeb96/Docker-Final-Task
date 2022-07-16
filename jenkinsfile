@@ -2,26 +2,33 @@ pipeline{
 
 	agent any
 
-  stages {
-    stage('Build Image') {
-      steps {
-        sh 'sudo chmod 666 /var/run/docker.sock'
-        sh 'docker build -t bitcoin-tracker .'
-      }
-    }
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
 
-    stage('Push Image') {
-      steps {
+	stages {
 
-        withCredentials([string(credentialsId: 'DockerSecret', variable: 'TOKEN')]) {
-            sh 'docker login -u waheeb96 -p ${TOKEN}'
-            sh 'docker tag bitcoin-price waheeb96/bitcoin-tracker:latest'
-            sh 'docker push waheeb96/bitcoin-tracker:latest'
-        }
-      }
-    }
-  }
+		stage('Build project') {
 
+			steps {
+				sh 'sudo docker build -t waheeb96/bitcoin-tracker:latest .'
+			}
+		}
+
+		stage('Login to dockerhub') {
+
+			steps {
+				sh 'sudo echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'sudo docker push waheeb96/bitcoin-tracker'
+			}
+		}
+	}
 
 	post {
 		always {
