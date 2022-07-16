@@ -11,6 +11,7 @@ pipeline{
 		stage('Build project') {
 
 			steps {
+				sh 'chmod 666 /var/run/docker.sock'
 				sh 'docker build -t waheeb96/bitcoin-tracker:latest .'
 			}
 		}
