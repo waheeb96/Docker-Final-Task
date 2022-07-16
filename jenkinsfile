@@ -11,28 +11,28 @@ pipeline{
 		stage('Build project') {
 
 			steps {
-				sh 'sudo docker build -t waheeb96/bitcoin-tracker:latest .'
+				sh 'docker build -t waheeb96/bitcoin-tracker:latest .'
 			}
 		}
 
 		stage('Login to dockerhub') {
 
 			steps {
-				sh 'sudo echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW |  docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
 		stage('Push') {
 
 			steps {
-				sh 'sudo docker push waheeb96/bitcoin-tracker'
+				sh ' docker push waheeb96/bitcoin-tracker'
 			}
 		}
 	}
 
 	post {
 		always {
-			sh 'sudo docker logout'
+			sh ' docker logout'
 		}
 	}
 
